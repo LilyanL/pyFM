@@ -121,7 +121,7 @@ class TriMesh:
 
     @facelist.setter
     def facelist(self, facelist):
-        facelist = np.asarray(facelist)
+        facelist = np.asarray(facelist) if facelist is not None else None
         if facelist is not None:
             if facelist.ndim != 2:
                 raise ValueError('Faces list has to be 2D')
@@ -906,7 +906,8 @@ class TriMesh:
         elif self.is_modified:
             return None
 
-        geod_filename = os.path.join(root_dir, 'geod_cache', f'{self.meshname}.npy')
+        else:
+            geod_filename = os.path.join(root_dir, 'geod_cache', f'{self.meshname}.npy')
 
         # Check if the geodesic matrix exists
         if os.path.isfile(geod_filename):
